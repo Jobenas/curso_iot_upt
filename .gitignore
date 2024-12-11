@@ -16,3 +16,4 @@ ejemplos_fw_curso_iot_upt/hola_mundo/.vscode/ipch
 este_archivo_va_a_ser_ignorado
 sw_python/.venv
 sw_python/__pycache__
+sw_python/mensajes.csv
