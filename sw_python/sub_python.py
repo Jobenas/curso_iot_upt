@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 
@@ -15,6 +16,8 @@ def on_message(mqttc, obj, msg):
     print(f"Se recibio un mensaje de tema {msg.topic} con Calidad de Servicio (QoS) {msg.qos} y contenido {msg.payload}")
 
     mensaje = json.loads(msg.payload.decode("utf-8"))
+    if "timestamp" not in mensaje:
+        mensaje["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     fila = f"{mensaje['timestamp']},{mensaje['promedio']},{mensaje['maximo']},{mensaje['minimo']},{mensaje['mediana']},{mensaje['unidad']}"
 
     if os.path.exists("mensajes.csv"):
