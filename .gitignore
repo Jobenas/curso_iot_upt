@@ -17,3 +17,6 @@ este_archivo_va_a_ser_ignorado
 sw_python/.venv
 sw_python/__pycache__
 sw_python/mensajes.csv
+sw_python/db_prueba.db
+sw_python/db_prueba.db-journal
+sw_python/db_temperatura.db
