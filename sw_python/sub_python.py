@@ -39,9 +39,20 @@ def on_message(mqttc, obj, msg):
 
     conn = sqlite3.connect("db_temperatura.db")
 
-    query = f"insert into temp_info (device_id, timestamp, promedio, maximo, minimo, mediana) values ('{mensaje['device_id']}', '{mensaje['timestamp']}', {mensaje['promedio']}, {mensaje['maximo']}, {mensaje['minimo']}, {mensaje['mediana']});"
+    query = f"select id, dev_uuid, dev_type from devices where dev_uuid = '{mensaje['device_id']}';"
 
-    exec_query(conn=conn, query=query, write=True)
+    cursor = exec_query(conn=conn, query=query, write=False)
+
+    
+    data = cursor.fetchone()
+    print(f"data: {data}")
+
+    if data:
+        dev_id = data[0]
+
+        query = f"insert into temp_info (device_id, timestamp, promedio, maximo, minimo, mediana) values ({dev_id}, '{mensaje['timestamp']}', {mensaje['promedio']}, {mensaje['maximo']}, {mensaje['minimo']}, {mensaje['mediana']});"
+
+        exec_query(conn=conn, query=query, write=True)
 
     conn.close()
 
